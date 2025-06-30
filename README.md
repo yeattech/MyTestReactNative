@@ -28,3 +28,13 @@ nvm alias default 22
 - yarn pod-install
 - yarn android
 - yarn ios --simulator "iPhone 16 Pro"
+
+# Project Branching
+
+- main (The main for release, versioning tag here)
+- develop/master (Development Should be done in here)
+- develop/feature (Specific Function)
+
+# Rename
+
+- npx react-native-rename "MT RN" -b "my.test.reactnative"
