@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "pod-install": "yarn install &&  sleep 2 && cd ios && pod install"
   },
   "dependencies": {
     "react": "19.1.0",
