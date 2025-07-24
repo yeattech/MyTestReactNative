@@ -1,4 +1,4 @@
-package com.mytestreactnative
+package my.test.reactnative
 
 import android.app.Application
 import com.facebook.react.PackageList
