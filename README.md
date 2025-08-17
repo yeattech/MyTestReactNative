@@ -38,3 +38,15 @@ nvm alias default 22
 # Rename
 
 - npx react-native-rename "MT RN" -b "my.test.reactnative"
+
+# Android Release
+
+- Please checkout the file ./android/app/build.gradle -> android -> signingConfigs -> release. Fill in the details for the password.
+- The password will be hold by the owner and will not be uploaded in the git.
+
+```
+cd android
+./gradlew clean
+./gradlew bundleRelease
+./gradlew assembleRelease
+```
