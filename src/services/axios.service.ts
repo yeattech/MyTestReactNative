@@ -1,11 +1,14 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
-import { API_ENDPOINTS } from '../constants/api-url.constants';
+import {
+  API_ENDPOINTS,
+  APIEndpointDetails,
+} from '../constants/api-url.constants';
 
 interface ApiResponse<T = any> {
   data: T;
   status: number;
   statusText: string;
-  success: boolean;
+  success: true;
 }
 
 interface RequestOptions {
@@ -67,7 +70,47 @@ export class AxiosService {
     return AxiosService.instance;
   }
 
-  private async makeRequest<T>(
+  // Method to send requests using endpoint keys
+  public async sendRequest<T>(
+    endpoint: APIEndpointDetails,
+    options: RequestOptions = {},
+  ): Promise<ApiResponse<T>> {
+    const endpointConfig = endpoint;
+
+    // Log request details
+    console.log(`REQUEST [${endpointConfig.url}]:`, {
+      method: endpointConfig.method,
+      endpoint: endpoint,
+      options: options,
+    });
+
+    const response = await this.makeRequest<T>(
+      endpointConfig.url,
+      endpointConfig.method,
+      options,
+    );
+
+    // Log response details
+    console.log(`RESPONSE [${endpointConfig.url}]:`, {
+      status: response.status,
+      statusText: response.statusText,
+      success: response.success,
+      data: response.data,
+    });
+
+    return response;
+  }
+
+  // Static convenience method for easier usage
+  public static async sendRequestStatic<T>(
+    endpoint: APIEndpointDetails,
+    options: RequestOptions = {},
+  ): Promise<ApiResponse<T>> {
+    const instance = AxiosService.getInstance();
+    return instance.sendRequest<T>(endpoint, options);
+  }
+
+  public async makeRequest<T>(
     endpoint: string,
     method: string,
     options: RequestOptions = {},
@@ -84,71 +127,12 @@ export class AxiosService {
     if (body && method !== 'GET') {
       config.data = body;
     }
-
     try {
-      const response: AxiosResponse<T> = await this.axiosInstance(config);
-
-      return {
-        data: response.data,
-        status: response.status,
-        statusText: response.statusText,
-        success: true,
-      };
-    } catch (error: any) {
-      return {
-        data: error.response?.data || null,
-        status: error.response?.status || 0,
-        statusText: error.response?.statusText || error.message,
-        success: false,
-      };
+      return await this.axiosInstance(config);
+    } catch (e) {
+      console.error(`Axios Error RESPONSE [${endpoint}]:`, e);
+      throw e;
     }
-  }
-
-  // Generic method for any endpoint
-  async request<T>(
-    endpoint: keyof typeof API_ENDPOINTS,
-    options: RequestOptions = {},
-  ): Promise<ApiResponse<T>> {
-    const endpointConfig = API_ENDPOINTS[endpoint];
-    return this.makeRequest<T>(
-      endpointConfig.url,
-      endpointConfig.method,
-      options,
-    );
-  }
-
-  // Specific methods for each endpoint
-  async getString(): Promise<ApiResponse<string>> {
-    return this.request('GET_STRING');
-  }
-
-  async getStringWithResponseEntity(): Promise<ApiResponse<any>> {
-    return this.request('GET_STRING_WITH_RESPONSE_ENTITY');
-  }
-
-  async getListString(): Promise<ApiResponse<string[]>> {
-    return this.request('GET_LIST_STRING');
-  }
-
-  async getDelay5Seconds(): Promise<ApiResponse<any>> {
-    return this.request('DELAY_5_SECONDS');
-  }
-
-  async getServerError400(): Promise<ApiResponse<any>> {
-    return this.request('SERVER_ERROR_400');
-  }
-
-  async getServerError500(): Promise<ApiResponse<any>> {
-    return this.request('SERVER_ERROR_500');
-  }
-
-  // Custom request method for flexibility
-  async customRequest<T>(
-    url: string,
-    method: string = 'GET',
-    options: RequestOptions = {},
-  ): Promise<ApiResponse<T>> {
-    return this.makeRequest<T>(url, method, options);
   }
 
   // Method to update base URL if needed

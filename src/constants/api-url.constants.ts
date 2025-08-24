@@ -48,5 +48,3 @@ export const API_ENDPOINTS: Readonly<
     method: API_METHOD.GET,
   },
 };
-
-export type API_ENDPOINTS = (typeof API_ENDPOINTS)[keyof typeof API_ENDPOINTS];
