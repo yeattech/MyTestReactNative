@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { API_ENDPOINTS } from '../constants/api.config.constant';
+import { API_ENDPOINTS } from '../constants/api-url.constants';
 import { Button, Text } from 'react-native';
 
 export const AxiosAPIScreen = () => {
   const testGetString = async () => {
     try {
-      const response = await axios.get(API_ENDPOINTS.TEST.GET_STRING.url);
+      const response = await axios.get(API_ENDPOINTS.GET_STRING.url);
       console.log('response:', response);
       console.log('response.data:', response.data);
     } catch (e) {
@@ -15,8 +15,8 @@ export const AxiosAPIScreen = () => {
 
   const testGetListString = async () => {
     try {
-      const response = await axios.get(API_ENDPOINTS.TEST.GET_LIST_STRING.url, {
-        method: API_ENDPOINTS.TEST.GET_STRING.method,
+      const response = await axios.get(API_ENDPOINTS.GET_LIST_STRING.url, {
+        method: API_ENDPOINTS.GET_STRING.method,
       });
       console.log('response:', response);
       console.log('response.data:', response.data);
