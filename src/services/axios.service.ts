@@ -148,3 +148,5 @@ export class AxiosService {
     };
   }
 }
+
+export const axiosService = AxiosService.getInstance();

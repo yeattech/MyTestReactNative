@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
-import { AxiosService } from '../services/axios.service';
+import { axiosService, AxiosService } from '../services/axios.service';
 import {
   API_ENDPOINTS,
   APIEndpointDetails,
@@ -66,7 +66,6 @@ export const AxiosAPIScreen = () => {
     setLastEndpoint(endpointName);
 
     try {
-      const axiosService = AxiosService.getInstance();
       const response = await axiosService.sendRequest(endpoint);
       setLastResponse(response);
       console.log(`✅ ${endpointName} Response:`, response);
