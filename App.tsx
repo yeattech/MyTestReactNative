@@ -11,6 +11,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { SampleScreen } from './src/screens/SampleScreen';
+import { FetchAPIScreen } from './src/screens/FetchAPIScreen';
+import { AxiosAPIScreen } from './src/screens/AxiosAPIScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +24,8 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="SampleScreen" component={SampleScreen} />
+        <Stack.Screen name="FetchAPIScreen" component={FetchAPIScreen} />
+        <Stack.Screen name="AxiosAPIScreen" component={AxiosAPIScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

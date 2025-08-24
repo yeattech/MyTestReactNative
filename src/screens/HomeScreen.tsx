@@ -11,6 +11,18 @@ export const HomeScreen = () => {
           navigation.navigate('SampleScreen');
         }}
       ></Button>
+      <Button
+        title="Navigate to Fetch"
+        onPress={() => {
+          navigation.navigate('FetchAPIScreen');
+        }}
+      ></Button>
+      <Button
+        title="Navigate to Axios"
+        onPress={() => {
+          navigation.navigate('AxiosAPIScreen');
+        }}
+      ></Button>
     </>
   );
 };
