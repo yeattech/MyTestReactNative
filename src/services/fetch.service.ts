@@ -41,8 +41,10 @@ export class FetchService {
 
     const response = await fetch(endpoint, requestOptions);
 
+    // Error Handler
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      console.error(`Fetch Error RESPONSE [${endpoint}]:`, response);
+      throw response;
     }
 
     const data = await response.json();
