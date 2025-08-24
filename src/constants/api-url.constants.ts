@@ -17,9 +17,7 @@ export interface APIEndpointDetails {
   method: string;
 }
 
-export const API_ENDPOINTS: Readonly<
-  Record<string, Readonly<APIEndpointDetails>>
-> = {
+export const API_ENDPOINTS = {
   // TestController
   GET_STRING: {
     url: API_DOMAIN + '/mytestjavaspringbootmaven/test/string',

@@ -58,19 +58,21 @@ export const AxiosAPIScreen = () => {
     setLoadingStates(prev => ({ ...prev, [endpoint]: loading }));
   };
 
-  const handleApiCall = async (
-    endpoint: APIEndpointDetails,
-    endpointName: string,
-  ) => {
-    setLoading(endpointName, true);
-    setLastEndpoint(endpointName);
+  const handleApiCall = async (endpoint: APIEndpointDetails) => {
+    const endpointKey =
+      Object.keys(API_ENDPOINTS).find(
+        key => API_ENDPOINTS[key as keyof typeof API_ENDPOINTS] === endpoint,
+      ) || 'Unknown';
+
+    setLoading(endpointKey, true);
+    setLastEndpoint(endpointKey);
 
     try {
       const response = await axiosService.sendRequest(endpoint);
       setLastResponse(response);
-      console.log(`✅ ${endpointName} Response:`, response);
+      console.log(`✅ ${endpointKey} Response:`, response);
     } catch (error: any) {
-      console.error(`❌ ${endpointName} Error:`, error);
+      console.error(`❌ ${endpointKey} Error:`, error);
       setLastResponse({
         error: true,
         message: error.message || 'An error occurred',
@@ -79,11 +81,11 @@ export const AxiosAPIScreen = () => {
 
       Alert.alert(
         'API Error',
-        `Error calling ${endpointName}: ${error.message || 'Unknown error'}`,
+        `Error calling ${endpointKey}: ${error.message || 'Unknown error'}`,
         [{ text: 'OK' }],
       );
     } finally {
-      setLoading(endpointName, false);
+      setLoading(endpointKey, false);
     }
   };
 
@@ -108,9 +110,7 @@ export const AxiosAPIScreen = () => {
             title="Get String"
             description="Fetch a simple string response"
             method="GET"
-            onPress={() =>
-              handleApiCall(API_ENDPOINTS.GET_STRING, 'GET_STRING')
-            }
+            onPress={() => handleApiCall(API_ENDPOINTS.GET_STRING)}
             isLoading={loadingStates.GET_STRING}
           />
 
@@ -119,10 +119,7 @@ export const AxiosAPIScreen = () => {
             description="Fetch string with response entity wrapper"
             method="GET"
             onPress={() =>
-              handleApiCall(
-                API_ENDPOINTS.GET_STRING_WITH_RESPONSE_ENTITY,
-                'GET_STRING_WITH_RESPONSE_ENTITY',
-              )
+              handleApiCall(API_ENDPOINTS.GET_STRING_WITH_RESPONSE_ENTITY)
             }
             isLoading={loadingStates.GET_STRING_WITH_RESPONSE_ENTITY}
           />
@@ -131,9 +128,7 @@ export const AxiosAPIScreen = () => {
             title="Get List of Strings"
             description="Fetch an array of strings"
             method="GET"
-            onPress={() =>
-              handleApiCall(API_ENDPOINTS.GET_LIST_STRING, 'GET_LIST_STRING')
-            }
+            onPress={() => handleApiCall(API_ENDPOINTS.GET_LIST_STRING)}
             isLoading={loadingStates.GET_LIST_STRING}
           />
 
@@ -141,9 +136,7 @@ export const AxiosAPIScreen = () => {
             title="Delay 5 Seconds"
             description="Test timeout handling with 5s delay"
             method="GET"
-            onPress={() =>
-              handleApiCall(API_ENDPOINTS.DELAY_5_SECONDS, 'DELAY_5_SECONDS')
-            }
+            onPress={() => handleApiCall(API_ENDPOINTS.DELAY_5_SECONDS)}
             isLoading={loadingStates.DELAY_5_SECONDS}
           />
 
@@ -151,9 +144,7 @@ export const AxiosAPIScreen = () => {
             title="Test 400 Error"
             description="Test client error handling"
             method="GET"
-            onPress={() =>
-              handleApiCall(API_ENDPOINTS.SERVER_ERROR_400, 'SERVER_ERROR_400')
-            }
+            onPress={() => handleApiCall(API_ENDPOINTS.SERVER_ERROR_400)}
             isLoading={loadingStates.SERVER_ERROR_400}
           />
 
@@ -161,9 +152,7 @@ export const AxiosAPIScreen = () => {
             title="Test 500 Error"
             description="Test server error handling"
             method="GET"
-            onPress={() =>
-              handleApiCall(API_ENDPOINTS.SERVER_ERROR_500, 'SERVER_ERROR_500')
-            }
+            onPress={() => handleApiCall(API_ENDPOINTS.SERVER_ERROR_500)}
             isLoading={loadingStates.SERVER_ERROR_500}
           />
         </View>
