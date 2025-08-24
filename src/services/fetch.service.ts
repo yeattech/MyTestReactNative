@@ -32,19 +32,35 @@ export class FetchService {
       requestOptions.body = JSON.stringify(body);
     }
 
-    try {
-      const response = await fetch(endpoint, requestOptions);
-      const data = await response.json();
+    // Log request details
+    console.log(`REQUEST [${endpoint}]:`, {
+      method: method,
+      endpoint: endpoint,
+      options: options,
+    });
 
-      return {
-        data,
-        status: response.status,
-        statusText: response.statusText,
-        ok: response.ok,
-      };
-    } catch (error) {
-      throw new Error(`Fetch request failed: ${error}`);
+    const response = await fetch(endpoint, requestOptions);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
+
+    const data = await response.json();
+
+    // Log response details
+    console.log(`RESPONSE [${endpoint}]:`, {
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok,
+      data: data,
+    });
+
+    return {
+      data,
+      status: response.status,
+      statusText: response.statusText,
+      ok: response.ok,
+    };
   }
 
   // Generic method for any endpoint
@@ -60,33 +76,8 @@ export class FetchService {
     );
   }
 
-  // Specific methods for each endpoint
-  static async getString(): Promise<ApiResponse<string>> {
-    return this.request('GET_STRING');
-  }
-
-  static async getStringWithResponseEntity(): Promise<ApiResponse<any>> {
-    return this.request('GET_STRING_WITH_RESPONSE_ENTITY');
-  }
-
-  static async getListString(): Promise<ApiResponse<string[]>> {
-    return this.request('GET_LIST_STRING');
-  }
-
-  static async getDelay5Seconds(): Promise<ApiResponse<any>> {
-    return this.request('DELAY_5_SECONDS');
-  }
-
-  static async getServerError400(): Promise<ApiResponse<any>> {
-    return this.request('SERVER_ERROR_400');
-  }
-
-  static async getServerError500(): Promise<ApiResponse<any>> {
-    return this.request('SERVER_ERROR_500');
-  }
-
   // Custom request method for flexibility
-  static async customRequest<T>(
+  static async sendRequest<T>(
     url: string,
     method: string = 'GET',
     options: RequestOptions = {},
