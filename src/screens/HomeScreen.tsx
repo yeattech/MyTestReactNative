@@ -25,6 +25,12 @@ export const HomeScreen = () => {
           navigation.navigate('AesCryptoTest');
         }}
       ></Button>
+      <Button
+        title="Test API Integration"
+        onPress={() => {
+          navigation.navigate('ApiTest');
+        }}
+      ></Button>
     </>
   );
 };
