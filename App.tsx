@@ -12,6 +12,7 @@ import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { SampleScreen } from './src/screens/SampleScreen';
 import { QuickCryptoTestScreen } from './src/screens/QuickCryptoTestScreen';
+import { AesCryptoTestScreen } from './src/screens/AesCryptoTestScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,7 @@ function App() {
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="SampleScreen" component={SampleScreen} />
         <Stack.Screen name="QuickCryptoTest" component={QuickCryptoTestScreen} />
+        <Stack.Screen name="AesCryptoTest" component={AesCryptoTestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
