@@ -14,6 +14,7 @@ import { SampleScreen } from './src/screens/SampleScreen';
 import { QuickCryptoTestScreen } from './src/screens/QuickCryptoTestScreen';
 import { AesCryptoTestScreen } from './src/screens/AesCryptoTestScreen';
 import { ApiTestScreen } from './src/screens/ApiTestScreen';
+import { NobleCurvesTestScreen } from './src/screens/NobleCurvesTestScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ function App() {
         <Stack.Screen name="QuickCryptoTest" component={QuickCryptoTestScreen} />
         <Stack.Screen name="AesCryptoTest" component={AesCryptoTestScreen} />
         <Stack.Screen name="ApiTest" component={ApiTestScreen} />
+        <Stack.Screen name="NobleCurvesTest" component={NobleCurvesTestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

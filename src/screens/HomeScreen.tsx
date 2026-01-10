@@ -31,6 +31,12 @@ export const HomeScreen = () => {
           navigation.navigate('ApiTest');
         }}
       ></Button>
+      <Button
+        title="Test @noble/curves"
+        onPress={() => {
+          navigation.navigate('NobleCurvesTest');
+        }}
+      ></Button>
     </>
   );
 };
